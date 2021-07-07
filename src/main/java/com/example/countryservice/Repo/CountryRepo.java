@@ -8,5 +8,12 @@ import java.util.UUID;
 @Repository
 public interface CountryRepo extends JpaRepository<Country, UUID> {
     Country findByCountryId(String id);
+    Boolean existsByCountryId(String id);
+    Country findByCode(String code);
+    Country findByName(String name);
+    Boolean existsByCode(String code);
+    Boolean existsByName(String name);
+
+
 
 }

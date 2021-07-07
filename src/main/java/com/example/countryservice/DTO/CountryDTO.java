@@ -11,10 +11,11 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @Data
 public class CountryDTO {
+
     private String countryId;
-    @Min(2)
-    @NotEmpty(message = "please provide code")
+
+
     private String code;
-    @NotEmpty(message = "please provide name")
+
     private String name;
 }
