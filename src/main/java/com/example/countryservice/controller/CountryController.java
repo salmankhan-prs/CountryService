@@ -1,6 +1,8 @@
 package com.example.countryservice.controller;
 
 import com.example.countryservice.DTO.CountryDTO;
+import com.example.countryservice.Model.Country;
+import com.example.countryservice.Model.CountryWrapper;
 import com.example.countryservice.exception.CountryNotFoundException;
 import com.example.countryservice.service.CountryService;
 import com.example.countryservice.ui.RequestModel;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,9 +27,20 @@ public class CountryController {
     @Autowired
     private CountryService service;
     /**
-    * for saving countries
+    * for saving countries in bulk
     * */
 
+    @PostMapping("/bulk")
+
+    public void createCountryInBulk(@RequestBody CountryWrapper countryWrapper){
+        System.out.println("countryWrapper = " + countryWrapper);
+        service.createCountryInBulk(countryWrapper);
+
+
+        }
+    /**
+     * for saving  a single country
+     * */
     @PostMapping("/countries")
     public ResponseEntity<CountryDTO>createCountry(@Valid @RequestBody RequestModel requestModel){
       logger.info("STARTED THE PROCESS OF SAVING "+requestModel.getName());

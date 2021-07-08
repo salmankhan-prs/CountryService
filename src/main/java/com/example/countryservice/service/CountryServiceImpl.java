@@ -2,6 +2,7 @@ package com.example.countryservice.service;
 
 import com.example.countryservice.DTO.CountryDTO;
 import com.example.countryservice.Model.Country;
+import com.example.countryservice.Model.CountryWrapper;
 import com.example.countryservice.Repo.CountryRepo;
 import com.example.countryservice.exception.CountryNotFoundException;
 import com.example.countryservice.ui.RequestModel;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,12 +31,31 @@ public class CountryServiceImpl implements CountryService{
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         CountryDTO countryDTO=modelMapper.map(requestModel,CountryDTO.class);
         countryDTO.setCountryId(UUID.randomUUID().toString());
+        String url="https://www.countryflags.io/"+requestModel.getCode()+"/shiny/64.png";
+        countryDTO.setFlagUrl(url);
         Country country=modelMapper.map(countryDTO,Country.class);
         countryRepo.save(country);
         logger.info("SAVED THE  "+requestModel.getName());
         return countryDTO;
 
 
+
+    }
+
+
+    public void createCountryInBulk( CountryWrapper requestModels){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        for(RequestModel requestModel:requestModels.getRequestModelList()){
+            CountryDTO countryDTO=modelMapper.map(requestModel,CountryDTO.class);
+            countryDTO.setCountryId(UUID.randomUUID().toString());
+            String url="https://www.countryflags.io/"+requestModel.getCode()+"/shiny/64.png";
+            countryDTO.setFlagUrl(url);
+            Country country=modelMapper.map(countryDTO,Country.class);
+            countryRepo.save(country);
+
+            logger.info("SAVED THE  "+requestModel.getName());
+        }
 
     }
 

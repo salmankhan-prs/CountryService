@@ -16,6 +16,7 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(unique = true)
+    private String flagUrl;
     private String countryId;
     private String code;
     private String name;

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 public class CountryDTO {
 
     private String countryId;
-
+   private String flagUrl;
 
     private String code;
 
